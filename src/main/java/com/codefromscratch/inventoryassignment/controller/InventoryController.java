@@ -1,0 +1,46 @@
+package com.codefromscratch.inventoryassignment.controller;
+
+import com.codefromscratch.inventoryassignment.model.Bicycle;
+import com.codefromscratch.inventoryassignment.service.BicycleService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+
+
+@RestController
+@RequestMapping("api/bicycle")
+public class InventoryController {
+   private final BicycleService bicycleService;
+   public InventoryController(BicycleService bicycleService) {
+       this.bicycleService = bicycleService;
+   }
+
+    @GetMapping("/{id}")
+    public Bicycle getBicycleId(@PathVariable Long id) {
+        return bicycleService.findBicycle(id);
+    }
+    @GetMapping("/all")
+    public String all() {
+        return bicycleService.findAllBicycles().toString();
+    }
+    @GetMapping("/inStock")
+    public String inStock() {
+       ArrayList<Bicycle> list = new ArrayList<>();
+       for (Bicycle bicycle : bicycleService.findAllBicycles()) {
+           if (bicycle.getInStock() > 0 ) {
+               list.add(bicycle);
+           }
+       }
+       return list.toString();
+    }
+    @DeleteMapping("/removeBicycle")
+    public String remove() {
+        return "o// The API is Running";
+    }
+    @PostMapping("/addBicycle")
+    public ResponseEntity<Bicycle> addBicycle(@RequestBody Bicycle bicycle) {
+       return ResponseEntity.ok(bicycleService.create(bicycle));
+    }
+
+}
