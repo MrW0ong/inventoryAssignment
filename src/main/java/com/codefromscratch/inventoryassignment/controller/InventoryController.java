@@ -34,9 +34,10 @@ public class InventoryController {
        }
        return list.toString();
     }
-    @DeleteMapping("/removeBicycle")
-    public String remove() {
-        return "o// The API is Running";
+    @DeleteMapping("/removeBicycle/{id}")
+    public ResponseEntity<String> removeBicycle(@PathVariable Long id) {
+        bicycleService.deleteBicycle(id);
+        return ResponseEntity.ok("Bicycle id " + id + " got removed.");
     }
     @PostMapping("/addBicycle")
     public ResponseEntity<Bicycle> addBicycle(@RequestBody Bicycle bicycle) {

@@ -9,11 +9,11 @@ public class Bicycle {
     Long id;
     String model;
 
-    public String getManufacturer() {
+    public Manufacturer getManufacturer() {
         return manufacturer;
     }
 
-    public void setManufacturer(String manufacturer) {
+    public void setManufacturer(Manufacturer manufacturer) {
         this.manufacturer = manufacturer;
     }
 
@@ -60,6 +60,11 @@ public class Bicycle {
     String color;
     String name;
     int inStock;
-    String manufacturer;
-
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "manufacturer_id", nullable = true)
+    Manufacturer manufacturer;
+    @Override
+    public String toString() {
+        return "{id:" + id + ", mode:'" + model + "', color:'" + color + "', name:'" + name + "', inStock:" + inStock + ", manufacturer:'" + manufacturer + "'}";
+    }
 }
