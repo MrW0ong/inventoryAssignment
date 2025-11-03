@@ -60,11 +60,11 @@ public class Bicycle {
     String color;
     String name;
     int inStock;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "manufacturer_id", nullable = true)
-    Manufacturer manufacturer;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "manufacturer_id", nullable = false)
+    private Manufacturer manufacturer;
     @Override
     public String toString() {
-        return "{id:" + id + ", mode:'" + model + "', color:'" + color + "', name:'" + name + "', inStock:" + inStock + ", manufacturer:'" + manufacturer + "'}";
+        return "{id:" + id + ", mode:'" + model + "', color:'" + color + "', name:'" + name + "', inStock:" + inStock + "}";
     }
 }

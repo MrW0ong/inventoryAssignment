@@ -6,33 +6,32 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
 @RequestMapping("api/bicycle")
 public class InventoryController {
    private final BicycleService bicycleService;
-   public InventoryController(BicycleService bicycleService) {
-       this.bicycleService = bicycleService;
-   }
+   public InventoryController(BicycleService bicycleService) { this.bicycleService = bicycleService; }
 
     @GetMapping("/{id}")
     public Bicycle getBicycleId(@PathVariable Long id) {
         return bicycleService.findBicycle(id);
     }
     @GetMapping("/all")
-    public String all() {
-        return bicycleService.findAllBicycles().toString();
+    public List<Bicycle> all() {
+        return bicycleService.findAllBicycles();
     }
     @GetMapping("/inStock")
-    public String inStock() {
+    public List<Bicycle> inStock() {
        ArrayList<Bicycle> list = new ArrayList<>();
        for (Bicycle bicycle : bicycleService.findAllBicycles()) {
            if (bicycle.getInStock() > 0 ) {
                list.add(bicycle);
            }
        }
-       return list.toString();
+       return list;
     }
     @DeleteMapping("/removeBicycle/{id}")
     public ResponseEntity<String> removeBicycle(@PathVariable Long id) {
